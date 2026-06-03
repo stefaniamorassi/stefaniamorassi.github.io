@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stefania Morassi — Autrice Romance</title>
+<meta name="description" content="Sito ufficiale di Stefania Morassi, autrice di romance pubblicata da PAV Edizioni. Scopri i romanzi Cicatrici e Dove nascono i ricordi.">
+<meta name="author" content="Stefania Morassi">
+
+<!-- Open Graph (anteprima sui social) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Stefania Morassi — Autrice Romance">
+<meta property="og:description" content="Storie di amore, perdita e rinascita. I romanzi Cicatrici e Dove nascono i ricordi, editi da PAV Edizioni.">
+<meta property="og:image" content="images/dove-nascono-i-ricordi.jpg">
+<meta property="og:locale" content="it_IT">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Marcellus&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink: #2e2622;          /* testo principale, bruno scuro */
+    --ink-soft: #5a4f48;     /* testo secondario */
+    --amber: #c97b3c;        /* accento ambra/tramonto */
+    --amber-deep: #a85b28;   /* accento più intenso */
+    --rose: #d99a86;         /* rosa cipria */
+    --cream: #faf4ec;        /* sfondo chiaro caldo */
+    --cream-2: #f3e9dc;      /* sfondo alternato */
+    --line: #e4d6c5;         /* linee sottili */
+    --shadow: 0 18px 50px -18px rgba(80, 50, 30, 0.35);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.75;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3 { font-weight: normal; line-height: 1.15; }
+
+  /* ---------- NAV ---------- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.1rem 2.2rem;
+    transition: background .4s ease, box-shadow .4s ease, padding .4s ease;
+  }
+  nav.scrolled {
+    background: rgba(250, 244, 236, 0.92);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px -10px rgba(80,50,30,.4);
+    padding: .7rem 2.2rem;
+  }
+  nav .brand {
+    font-family: 'Marcellus', serif;
+    font-size: 1.15rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity .4s ease;
+  }
+  nav.scrolled .brand { opacity: 1; }
+  nav .links { display: flex; gap: 1.8rem; }
+  nav .links a {
+    font-size: .82rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    position: relative;
+    padding: .2rem 0;
+    transition: color .3s;
+  }
+  nav.scrolled .links a { color: var(--ink); }
+  nav .links a::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -2px;
+    width: 0; height: 1px;
+    background: var(--amber-deep);
+    transition: width .35s ease;
+  }
+  nav .links a:hover::after { width: 100%; }
+  nav .links a:hover { color: var(--amber-deep); }
+
+  /* Nav su hero: testo scuro perché lo sfondo è chiaro */
+  nav:not(.scrolled) .links a { color: var(--ink); text-shadow: 0 1px 6px rgba(255,250,242,.6); }
+
+  .nav-toggle { display: none; }
+
+  /* ---------- HERO ---------- */
+  header.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 8vw;
+    background: url('images/sfondo-home.jpg') center 30% / cover no-repeat;
+  }
+  header.hero::after {
+    /* velo chiaro sul lato sinistro per leggibilità del testo scuro */
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, rgba(255,251,244,.55) 0%, rgba(255,251,244,.2) 45%, rgba(255,251,244,0) 70%);
+    pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 640px; }
+  .hero-eyebrow {
+    font-family: 'Jost', sans-serif;
+    font-size: .8rem;
+    letter-spacing: .42em;
+    text-transform: uppercase;
+    color: var(--amber-deep);
+    margin-bottom: 1.4rem;
+    opacity: 0;
+    animation: fadeUp 1s ease .3s forwards;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.2rem, 9vw, 6.4rem);
+    color: var(--ink);
+    letter-spacing: .01em;
+    margin-bottom: 1.2rem;
+    opacity: 0;
+    animation: fadeUp 1s ease .5s forwards;
+  }
+  .hero h1 .light { display: block; font-style: italic; font-weight: 400; }
+  .hero .tagline {
+    font-size: 1.12rem;
+    color: var(--ink-soft);
+    max-width: 30ch;
+    margin-bottom: 2.2rem;
+    opacity: 0;
+    animation: fadeUp 1s ease .7s forwards;
+  }
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: .7rem;
+    background: var(--amber-deep);
+    color: #fff;
+    text-decoration: none;
+    padding: .95rem 2.1rem;
+    font-size: .82rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: transform .3s ease, background .3s ease, box-shadow .3s ease;
+    box-shadow: 0 10px 30px -12px rgba(168,91,40,.7);
+    opacity: 0;
+    animation: fadeUp 1s ease .9s forwards;
+  }
+  .hero-cta:hover { background: var(--amber); transform: translateY(-3px); box-shadow: 0 16px 36px -12px rgba(168,91,40,.8); }
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem; left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    font-size: .7rem;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    opacity: 0;
+    animation: fadeIn 1s ease 1.4s forwards;
+  }
+  .scroll-hint span { display: block; text-align: center; font-size: 1.1rem; margin-top: .3rem; animation: bob 2s ease-in-out infinite; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { to { opacity: 1; } }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+
+  /* ---------- SECTIONS ---------- */
+  section { padding: 6.5rem 8vw; position: relative; }
+
+  .section-head { text-align: center; max-width: 620px; margin: 0 auto 4rem; }
+  .section-head .label {
+    font-size: .78rem;
+    letter-spacing: .4em;
+    text-transform: uppercase;
+    color: var(--amber-deep);
+    display: block;
+    margin-bottom: 1rem;
+  }
+  .section-head h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    color: var(--ink);
+  }
+  .ornament {
+    width: 60px; height: 1px;
+    background: var(--amber);
+    margin: 1.4rem auto 0;
+    position: relative;
+  }
+  .ornament::before {
+    content: '✦';
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--cream);
+    color: var(--amber);
+    font-size: .7rem;
+    padding: 0 .5rem;
+  }
+
+  /* ---------- BOOKS ---------- */
+  #libri { background: var(--cream); }
+  .book {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 4rem;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto 6rem;
+  }
+  .book:last-child { margin-bottom: 0; }
+  .book.reverse { grid-template-columns: 1fr 320px; }
+  .book.reverse .book-cover { order: 2; }
+
+  .book-cover { position: relative; }
+  .book-cover img {
+    width: 100%;
+    border-radius: 3px;
+    box-shadow: var(--shadow);
+    display: block;
+    transition: transform .5s ease;
+  }
+  .book-cover:hover img { transform: translateY(-6px) rotate(-1deg); }
+  .book-badge {
+    position: absolute;
+    top: -14px; right: -14px;
+    background: var(--amber-deep);
+    color: #fff;
+    font-size: .68rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: .5rem .9rem;
+    border-radius: 2px;
+    box-shadow: 0 8px 20px -8px rgba(168,91,40,.8);
+    transform: rotate(3deg);
+  }
+
+  .book-info .collana {
+    font-size: .76rem;
+    letter-spacing: .26em;
+    text-transform: uppercase;
+    color: var(--amber-deep);
+    margin-bottom: .8rem;
+  }
+  .book-info h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 2.9rem);
+    color: var(--ink);
+    margin-bottom: 1.3rem;
+    line-height: 1.05;
+  }
+  .book-info p.trama {
+    color: var(--ink-soft);
+    margin-bottom: 1rem;
+    font-size: 1.02rem;
+  }
+  .book-meta {
+    font-size: .82rem;
+    color: var(--ink-soft);
+    letter-spacing: .04em;
+    margin: 1.4rem 0 1.6rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--line);
+  }
+  .book-actions { display: flex; flex-wrap: wrap; gap: .8rem; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    text-decoration: none;
+    font-size: .8rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: .8rem 1.5rem;
+    border-radius: 2px;
+    transition: all .3s ease;
+    cursor: pointer;
+    border: 1px solid var(--amber-deep);
+  }
+  .btn-primary { background: var(--amber-deep); color: #fff; }
+  .btn-primary:hover { background: var(--amber); border-color: var(--amber); transform: translateY(-2px); }
+  .btn-ghost { background: transparent; color: var(--amber-deep); }
+  .btn-ghost:hover { background: var(--amber-deep); color: #fff; transform: translateY(-2px); }
+  .btn-text { background: transparent; border-color: transparent; color: var(--ink); padding-left: 0; }
+  .btn-text:hover { color: var(--amber-deep); }
+
+  /* ---------- ESTRATTO (placeholder) ---------- */
+  .estratto-note {
+    font-size: .78rem;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin-top: .8rem;
+    opacity: .8;
+  }
+
+  /* ---------- BIO ---------- */
+  #autrice {
+    background: var(--cream-2);
+    background-image: radial-gradient(circle at 20% 30%, rgba(217,154,134,.12), transparent 40%);
+  }
+  .bio-wrap { max-width: 760px; margin: 0 auto; text-align: center; }
+  .bio-wrap p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+  .bio-wrap p:last-of-type { margin-bottom: 0; }
+  .bio-wrap .firma {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 2rem;
+    color: var(--amber-deep);
+    margin-top: 2.5rem;
+  }
+  .bio-highlight { color: var(--amber-deep); font-style: italic; }
+
+  /* ---------- NEWSLETTER ---------- */
+  #newsletter {
+    background: var(--ink);
+    color: var(--cream);
+    text-align: center;
+  }
+  #newsletter .section-head h2 { color: var(--cream); }
+  #newsletter .section-head .label { color: var(--rose); }
+  #newsletter .ornament { background: var(--rose); }
+  #newsletter .ornament::before { background: var(--ink); color: var(--rose); }
+  .news-text { max-width: 540px; margin: 0 auto 2.4rem; color: #e8dccf; font-size: 1.05rem; }
+  .news-form {
+    display: flex;
+    gap: .8rem;
+    max-width: 480px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .news-form input {
+    flex: 1;
+    min-width: 240px;
+    padding: .95rem 1.3rem;
+    border: 1px solid rgba(255,255,255,.25);
+    background: rgba(255,255,255,.06);
+    color: #fff;
+    font-family: 'Jost', sans-serif;
+    font-size: .95rem;
+    border-radius: 2px;
+  }
+  .news-form input::placeholder { color: #b9a89a; }
+  .news-form input:focus { outline: none; border-color: var(--rose); }
+  .news-form button {
+    padding: .95rem 2rem;
+    background: var(--amber-deep);
+    color: #fff;
+    border: none;
+    font-family: 'Jost', sans-serif;
+    font-size: .82rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background .3s ease, transform .3s ease;
+  }
+  .news-form button:hover { background: var(--amber); transform: translateY(-2px); }
+  .news-mini { font-size: .76rem; color: #9c8a7c; margin-top: 1.2rem; }
+
+  /* ---------- CONTATTI / FOOTER ---------- */
+  footer {
+    background: var(--cream);
+    text-align: center;
+    padding: 5rem 8vw 3rem;
+  }
+  footer .label {
+    font-size: .78rem;
+    letter-spacing: .4em;
+    text-transform: uppercase;
+    color: var(--amber-deep);
+    margin-bottom: 1rem;
+  }
+  footer h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    margin-bottom: 2rem;
+    color: var(--ink);
+  }
+  .socials { display: flex; gap: 1.5rem; justify-content: center; margin-bottom: 2.5rem; flex-wrap: wrap; }
+  .socials a {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: .9rem;
+    letter-spacing: .06em;
+    padding: .7rem 1.3rem;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    transition: all .3s ease;
+  }
+  .socials a:hover { border-color: var(--amber-deep); color: var(--amber-deep); transform: translateY(-2px); }
+  .footer-contact { color: var(--ink-soft); font-size: .95rem; margin-bottom: .4rem; }
+  .footer-contact a { color: var(--amber-deep); text-decoration: none; }
+  .footer-contact a:hover { text-decoration: underline; }
+  .copyright {
+    margin-top: 3rem;
+    padding-top: 1.6rem;
+    border-top: 1px solid var(--line);
+    font-size: .78rem;
+    color: var(--ink-soft);
+    letter-spacing: .05em;
+  }
+  .copyright .pav { color: var(--amber-deep); }
+
+  /* ---------- MODAL ESTRATTO ---------- */
+  .modal {
+    display: none;
+    position: fixed; inset: 0;
+    z-index: 200;
+    background: rgba(46,38,34,.6);
+    backdrop-filter: blur(4px);
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+  }
+  .modal.open { display: flex; }
+  .modal-box {
+    background: var(--cream);
+    max-width: 640px;
+    width: 100%;
+    max-height: 82vh;
+    overflow-y: auto;
+    padding: 3rem;
+    border-radius: 4px;
+    position: relative;
+    box-shadow: 0 30px 80px -20px rgba(0,0,0,.5);
+  }
+  .modal-box h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    color: var(--ink);
+    margin-bottom: .4rem;
+  }
+  .modal-box .modal-sub { font-size: .8rem; letter-spacing: .2em; text-transform: uppercase; color: var(--amber-deep); margin-bottom: 1.8rem; }
+  .modal-box p { color: var(--ink-soft); margin-bottom: 1rem; font-size: 1.02rem; }
+  .modal-close {
+    position: absolute; top: 1.2rem; right: 1.4rem;
+    background: none; border: none;
+    font-size: 1.8rem; color: var(--ink-soft);
+    cursor: pointer; line-height: 1;
+    transition: color .3s;
+  }
+  .modal-close:hover { color: var(--amber-deep); }
+  .modal-placeholder {
+    font-style: italic;
+    color: var(--ink-soft);
+    background: var(--cream-2);
+    padding: 1.5rem;
+    border-radius: 3px;
+    border-left: 3px solid var(--amber);
+  }
+
+  /* ---------- REVEAL ON SCROLL ---------- */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity .9s ease, transform .9s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 820px) {
+    nav { padding: 1rem 1.4rem; }
+    nav.scrolled { padding: .7rem 1.4rem; }
+    nav .links { gap: 1rem; }
+    nav .links a { font-size: .72rem; }
+    header.hero { padding: 0 7vw; background-position: center 40%; }
+    header.hero::after { background: linear-gradient(180deg, rgba(255,251,244,.3) 0%, rgba(255,251,244,.55) 100%); }
+    section { padding: 4.5rem 7vw; }
+    .book, .book.reverse { grid-template-columns: 1fr; gap: 2rem; max-width: 420px; }
+    .book.reverse .book-cover { order: 0; }
+    .book-cover { max-width: 260px; margin: 0 auto; }
+    .book-info { text-align: center; }
+    .book-meta { text-align: left; }
+    .book-actions { justify-content: center; }
+    .bio-wrap p { font-size: 1.2rem; }
+    .modal-box { padding: 2rem 1.5rem; }
+  }
+  @media (max-width: 480px) {
+    nav .brand { display: none; }
+    .hero h1 { font-size: 3rem; }
+    .news-form input { min-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#home" class="brand">Stefania Morassi</a>
+  <div class="links">
+    <a href="#libri">Libri</a>
+    <a href="#autrice">Autrice</a>
+    <a href="#newsletter">Newsletter</a>
+    <a href="#contatti">Contatti</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="home">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Autrice Romance</div>
+    <h1>Stefania<span class="light">Morassi</span></h1>
+    <p class="tagline">Storie di amore, di ferite e di rinascita — là dove i ricordi nascono davvero: nel cuore.</p>
+    <a href="#libri" class="hero-cta">Scopri i romanzi →</a>
+  </div>
+  <div class="scroll-hint">Scorri<span>↓</span></div>
+</header>
+
+<!-- LIBRI -->
+<section id="libri">
+  <div class="section-head reveal">
+    <span class="label">I Romanzi</span>
+    <h2>Due storie, un'unica anima</h2>
+    <div class="ornament"></div>
+  </div>
+
+  <!-- Libro 1: Dove nascono i ricordi (novità) -->
+  <article class="book reveal">
+    <div class="book-cover">
+      <span class="book-badge">Novità · 2026</span>
+      <img src="images/dove-nascono-i-ricordi.jpg" alt="Copertina del romanzo Dove nascono i ricordi di Stefania Morassi">
+    </div>
+    <div class="book-info">
+      <div class="collana">Star Romance · PAV Edizioni</div>
+      <h3>Dove nascono i ricordi</h3>
+      <p class="trama">Aaron Foster, imprenditore della Florida, ha perso tutto: la ricchezza, la famiglia, il rispetto. Gli rimane solo la figlia Emily e il desiderio di vendicarsi di coloro che hanno ucciso Susan, la figlia maggiore.</p>
+      <p class="trama">Dave Wilson, ex agente dell'FBI segnato da un fallimento che non si perdona, viene richiamato in servizio per proteggere Emily durante il processo contro la criminalità organizzata nel quale Aaron ha deciso di testimoniare. Ciò che nasce tra loro è qualcosa che nessuno dei due aveva previsto — e che il destino sembra deciso a spezzare.</p>
+      <p class="trama">In una storia che intreccia amore, suspense e seconde possibilità, Stefania Morassi ci accompagna là dove i ricordi nascono davvero: non nella memoria, ma nel cuore.</p>
+      <div class="book-meta">Edizione Deluxe · 15,00 € · Età di lettura 14+ · Maggio 2026 · ISBN 979-12-5777-107-2</div>
+      <div class="book-actions">
+        <a href="https://www.amazon.it/DOVE-NASCONO-RICORDI-PAV-Editore/dp/B0H2CR21VF/" target="_blank" rel="noopener" class="btn btn-primary">Acquista cartaceo</a>
+        <a href="https://www.amazon.it/DOVE-NASCONO-RICORDI-PAV-Editore-ebook/dp/B0H28YP8SX/" target="_blank" rel="noopener" class="btn btn-ghost">Ebook</a>
+        <button class="btn btn-text" onclick="openModal('modal-dnr')">Leggi un estratto →</button>
+      </div>
+    </div>
+  </article>
+
+  <!-- Libro 2: Cicatrici -->
+  <article class="book reverse reveal">
+    <div class="book-cover">
+      <img src="images/cicatrici.jpg" alt="Copertina del romanzo Cicatrici di Stefania Morassi">
+    </div>
+    <div class="book-info">
+      <div class="collana">Dark Romance · PAV Edizioni</div>
+      <h3>Cicatrici</h3>
+      <p class="trama">Catherine ha una ferita che il tempo non cancella. Sfidando la sua famiglia e i giudizi di una piccola città di provincia, ha scelto di crescere da sola sua figlia Elisa, costruendo la propria forza un giorno dopo l'altro.</p>
+      <p class="trama">Marc è uno scrittore inglese che il dolore ha reso muto. Dopo una perdita che lo ha svuotato, ha smesso di scrivere, di amare, di vivere.</p>
+      <p class="trama">Un manoscritto da tradurre li fa incontrare. Tra di loro, all'inizio, solo distanza e diffidenza — ma due anime segnate dalle stesse cicatrici sanno riconoscersi. In una storia che parla di perdita e di rinascita, di perdono e di amori che sembrano impossibili, Catherine e Marc scopriranno che essere amati non è una colpa, ma un diritto.</p>
+      <div class="book-meta">Romanzo · Età di lettura 15+ · Gennaio 2024</div>
+      <div class="book-actions">
+        <a href="https://www.amazon.it/CICATRICI-PAV-edizioni-editore/dp/B0CS6XB6QN/" target="_blank" rel="noopener" class="btn btn-primary">Acquista su Amazon</a>
+        <button class="btn btn-text" onclick="openModal('modal-cic')">Leggi un estratto →</button>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- AUTRICE -->
+<section id="autrice">
+  <div class="section-head reveal">
+    <span class="label">L'Autrice</span>
+    <h2>Stefania Morassi</h2>
+    <div class="ornament"></div>
+  </div>
+  <div class="bio-wrap reveal">
+    <p>Vive e lavora a Tolmezzo, in provincia di Udine. Appassionata di libri e scrittura, ha iniziato a pubblicare i suoi primi racconti sulla piattaforma Wattpad, dove ha ricevuto riscontri positivi che l'hanno incoraggiata a proseguire il suo percorso creativo.</p>
+    <p>La sua scrittura si distingue per uno stile <span class="bio-highlight">introspettivo</span>, attento alle sfumature emotive e ai conflitti interiori dei personaggi.</p>
+    <p>Nel 2023 il suo racconto <em>Consapevolezza</em> si è classificato al secondo posto nel concorso letterario "Il dolore dell'anima", indetto da PAV Edizioni, con la quale nel 2024 ha pubblicato il suo primo romanzo, <em>Cicatrici</em>. Nello stesso anno un suo racconto è stato inserito nella raccolta <em>Scrivi un racconto di dieci parole</em> (Ivvi Editore). Nel 2026, sempre con Ivvi Editore, è stata selezionata per l'antologia <em>Messaggi di amore eterno</em>.</p>
+    <div class="firma">Stefania</div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section id="newsletter">
+  <div class="section-head reveal">
+    <span class="label">Resta in contatto</span>
+    <h2>La newsletter</h2>
+    <div class="ornament"></div>
+  </div>
+  <p class="news-text reveal">Iscriviti per essere la prima a sapere quando esce un nuovo romanzo, e per ricevere anteprime e contenuti speciali direttamente nella tua casella di posta.</p>
+  <form class="news-form reveal" onsubmit="return newsletterSubmit(event)">
+    <input type="email" placeholder="La tua email" required aria-label="La tua email">
+    <button type="submit">Iscrivimi</button>
+  </form>
+  <p class="news-mini reveal">Niente spam, solo storie. Puoi disiscriverti quando vuoi.</p>
+</section>
+
+<!-- CONTATTI / FOOTER -->
+<footer id="contatti">
+  <div class="label reveal">Contatti</div>
+  <h2 class="reveal">Scrivimi</h2>
+  <div class="socials reveal">
+    <a href="https://www.instagram.com/s.morassi/" target="_blank" rel="noopener">Instagram</a>
+    <a href="mailto:stefania.morassi@gmail.com">Email</a>
+  </div>
+  <p class="footer-contact reveal">Per contatti, collaborazioni ed eventi: <a href="mailto:stefania.morassi@gmail.com">stefania.morassi@gmail.com</a></p>
+  <div class="copyright">
+    © <span id="year"></span> Stefania Morassi · Tutti i diritti riservati · Romanzi editi da <span class="pav">PAV Edizioni</span>
+  </div>
+</footer>
+
+<!-- MODALI ESTRATTI -->
+<div class="modal" id="modal-dnr">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-dnr')">&times;</button>
+    <h3>Dove nascono i ricordi</h3>
+    <div class="modal-sub">Estratto</div>
+    <div class="modal-placeholder">
+      L'estratto di questo romanzo sarà disponibile a breve. Nel frattempo puoi leggere le prime pagine direttamente su Amazon o richiedere informazioni a PAV Edizioni.
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modal-cic">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-cic')">&times;</button>
+    <h3>Cicatrici</h3>
+    <div class="modal-sub">Estratto</div>
+    <div class="modal-placeholder">
+      L'estratto di questo romanzo sarà disponibile a breve. Nel frattempo puoi leggere le prime pagine direttamente su Amazon o richiedere informazioni a PAV Edizioni.
+    </div>
+  </div>
+</div>
+
+<script>
+  // Anno corrente
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Nav che cambia allo scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  });
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Modali estratto
+  function openModal(id) { document.getElementById(id).classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeModal(id) { document.getElementById(id).classList.remove('open'); document.body.style.overflow = ''; }
+  document.querySelectorAll('.modal').forEach(m => {
+    m.addEventListener('click', (e) => { if (e.target === m) { m.classList.remove('open'); document.body.style.overflow = ''; } });
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') document.querySelectorAll('.modal.open').forEach(m => { m.classList.remove('open'); document.body.style.overflow = ''; });
+  });
+
+  // Newsletter (placeholder finché non si collega Mailchimp/MailerLite)
+  function newsletterSubmit(e) {
+    e.preventDefault();
+    const input = e.target.querySelector('input');
+    alert('Grazie! L\'iscrizione alla newsletter sarà attiva a breve. Torna presto a trovarci.');
+    input.value = '';
+    return false;
+  }
+</script>
+</body>
+</html>
