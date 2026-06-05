@@ -1,0 +1,35 @@
+/* Font ospitati localmente — nessuna chiamata a Google */
+
+/* Cormorant Garamond (variable, pesi 400–600) */
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('CormorantGaramond-variable.woff2') format('woff2');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('CormorantGaramond-Italic-variable.woff2') format('woff2');
+  font-weight: 300 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Marcellus (un solo peso) */
+@font-face {
+  font-family: 'Marcellus';
+  src: url('Marcellus-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Jost (variable, pesi 300–500) */
+@font-face {
+  font-family: 'Jost';
+  src: url('Jost-variable.woff2') format('woff2');
+  font-weight: 300 500;
+  font-style: normal;
+  font-display: swap;
+}
