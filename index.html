@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stefania Morassi — Autrice Romance</title>
+<meta name="description" content="Sito ufficiale di Stefania Morassi, autrice di romance pubblicata da PAV Edizioni. Scopri i romanzi Cicatrici e Dove nascono i ricordi.">
+<meta name="author" content="Stefania Morassi">
+
+<!-- Open Graph (anteprima sui social) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Stefania Morassi — Autrice Romance">
+<meta property="og:description" content="Storie di amore, perdita e rinascita. I romanzi Cicatrici e Dove nascono i ricordi, editi da PAV Edizioni.">
+<meta property="og:image" content="images/dove-nascono-i-ricordi.jpg">
+<meta property="og:locale" content="it_IT">
+
+<link href="fonts.css" rel="stylesheet">
+
+<style>
+  :root {
+    --ink: #2e2622;          /* testo principale, bruno scuro */
+    --ink-soft: #5a4f48;     /* testo secondario */
+    --amber: #c97b3c;        /* accento ambra/tramonto */
+    --amber-deep: #a85b28;   /* accento più intenso */
+    --rose: #d99a86;         /* rosa cipria */
+    --cream: #faf4ec;        /* sfondo chiaro caldo */
+    --cream-2: #f3e9dc;      /* sfondo alternato */
+    --line: #e4d6c5;         /* linee sottili */
+    --shadow: 0 18px 50px -18px rgba(80, 50, 30, 0.35);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.75;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3 { font-weight: normal; line-height: 1.15; }
+
+  /* ---------- NAV ---------- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.1rem 2.2rem;
+    transition: background .4s ease, box-shadow .4s ease, padding .4s ease;
+  }
+  nav.scrolled {
+    background: rgba(250, 244, 236, 0.92);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px -10px rgba(80,50,30,.4);
+    padding: .7rem 2.2rem;
+  }
+  nav .brand {
+    font-family: 'Marcellus', serif;
+    font-size: 1.15rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity .4s ease;
+  }
+  nav.scrolled .brand { opacity: 1; }
+  nav .links { display: flex; gap: 1.8rem; }
+  nav .links a {
+    font-size: .82rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    position: relative;
+    padding: .2rem 0;
+    transition: color .3s;
+  }
+  nav.scrolled .links a { color: var(--ink); }
+  nav .links a::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -2px;
+    width: 0; height: 1px;
+    background: var(--amber-deep);
+    transition: width .35s ease;
+  }
+  nav .links a:hover::after { width: 100%; }
+  nav .links a:hover { color: var(--amber-deep); }
+
+  /* Nav su hero: testo scuro perché lo sfondo è chiaro */
+  nav:not(.scrolled) .links a { color: var(--ink); text-shadow: 0 1px 6px rgba(255,250,242,.6); }
+
+  .nav-toggle { display: none; }
+
+  /* ---------- HERO ---------- */
+  header.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 8vw;
+    background: url('images/sfondo-home.jpg') center 30% / cover no-repeat;
+  }
+  header.hero::after {
+    /* velo chiaro sul lato sinistro per leggibilità del testo scuro */
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, rgba(255,251,244,.55) 0%, rgba(255,251,244,.2) 45%, rgba(255,251,244,0) 70%);
+    pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 640px; margin-top: -4vh; }
+  .visually-hidden {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .hero-logo {
+    display: block;
+    width: clamp(180px, 24vw, 240px);
+    height: auto;
+    margin-bottom: 1.2rem;
+    opacity: 0;
+    animation: fadeUp 1s ease .15s forwards;
+  }
+  .hero-eyebrow {
+    font-family: 'Jost', sans-serif;
+    font-size: .8rem;
+    letter-spacing: .42em;
+    text-transform: uppercase;
+    color: var(--amber-deep);
+    margin-bottom: 1.4rem;
+    opacity: 0;
+    animation: fadeUp 1s ease .3s forwards;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.2rem, 9vw, 6.4rem);
+    color: var(--ink);
+    letter-spacing: .01em;
+    margin-bottom: 1.2rem;
+    opacity: 0;
+    animation: fadeUp 1s ease .5s forwards;
+  }
+  .hero h1 .light { display: block; font-style: italic; font-weight: 400; }
+  .hero .tagline {
+    font-size: 1.12rem;
+    color: var(--ink-soft);
+    max-width: 30ch;
+    margin-bottom: 2.2rem;
+    opacity: 0;
+    animation: fadeUp 1s ease .7s forwards;
+  }
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: .7rem;
+    background: var(--amber-deep);
+    color: #fff;
+    text-decoration: none;
+    padding: .95rem 2.1rem;
+    font-size: .82rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: transform .3s ease, background .3s ease, box-shadow .3s ease;
+    box-shadow: 0 10px 30px -12px rgba(168,91,40,.7);
+    opacity: 0;
+    animation: fadeUp 1s ease .9s forwards;
+  }
+  .hero-cta:hover { background: var(--amber); transform: translateY(-3px); box-shadow: 0 16px 36px -12px rgba(168,91,40,.8); }
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem; left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    font-size: .7rem;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    opacity: 0;
+    animation: fadeIn 1s ease 1.4s forwards;
+  }
+  .scroll-hint span { display: block; text-align: center; font-size: 1.1rem; margin-top: .3rem; animation: bob 2s ease-in-out infinite; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { to { opacity: 1; } }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+
+  /* ---------- SECTIONS ---------- */
+  section { padding: 6.5rem 8vw; position: relative; }
+
+  .section-head { text-align: center; max-width: 620px; margin: 0 auto 4rem; }
+  .section-head .label {
+    font-size: .78rem;
+    letter-spacing: .4em;
+    text-transform: uppercase;
+    color: var(--amber-deep);
+    display: block;
+    margin-bottom: 1rem;
+  }
+  .section-head h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    color: var(--ink);
+  }
+  .ornament {
+    width: 60px; height: 1px;
+    background: var(--amber);
+    margin: 1.4rem auto 0;
+    position: relative;
+  }
+  .ornament::before {
+    content: '✦';
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--cream);
+    color: var(--amber);
+    font-size: .7rem;
+    padding: 0 .5rem;
+  }
+
+  /* ---------- BOOKS ---------- */
+  #libri { background: var(--cream); }
+  .book {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 4rem;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto 6rem;
+  }
+  .book:last-child { margin-bottom: 0; }
+  .book.reverse { grid-template-columns: 1fr 320px; }
+  .book.reverse .book-cover { order: 2; }
+
+  .book-cover { position: relative; }
+  .book-cover img {
+    width: 100%;
+    border-radius: 3px;
+    box-shadow: var(--shadow);
+    display: block;
+    transition: transform .5s ease;
+  }
+  .book-cover:hover img { transform: translateY(-6px) rotate(-1deg); }
+  .book-badge {
+    position: absolute;
+    top: -14px; right: -14px;
+    background: var(--amber-deep);
+    color: #fff;
+    font-size: .68rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: .5rem .9rem;
+    border-radius: 2px;
+    box-shadow: 0 8px 20px -8px rgba(168,91,40,.8);
+    transform: rotate(3deg);
+  }
+
+  .book-info .collana {
+    font-size: .76rem;
+    letter-spacing: .26em;
+    text-transform: uppercase;
+    color: var(--amber-deep);
+    margin-bottom: .8rem;
+  }
+  .book-info h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 2.9rem);
+    color: var(--ink);
+    margin-bottom: 1.3rem;
+    line-height: 1.05;
+  }
+  .book-info p.trama {
+    color: var(--ink-soft);
+    margin-bottom: 1rem;
+    font-size: 1.02rem;
+  }
+  .book-meta {
+    font-size: .82rem;
+    color: var(--ink-soft);
+    letter-spacing: .04em;
+    margin: 1.4rem 0 1.6rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--line);
+  }
+  .book-actions { display: flex; flex-wrap: wrap; gap: .8rem; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    text-decoration: none;
+    font-size: .8rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: .8rem 1.5rem;
+    border-radius: 2px;
+    transition: all .3s ease;
+    cursor: pointer;
+    border: 1px solid var(--amber-deep);
+  }
+  .btn-primary { background: var(--amber-deep); color: #fff; }
+  .btn-primary:hover { background: var(--amber); border-color: var(--amber); transform: translateY(-2px); }
+  .btn-ghost { background: transparent; color: var(--amber-deep); }
+  .btn-ghost:hover { background: var(--amber-deep); color: #fff; transform: translateY(-2px); }
+  .btn-text { background: transparent; border-color: transparent; color: var(--ink); padding-left: 0; }
+  .btn-text:hover { color: var(--amber-deep); }
+
+  /* ---------- ESTRATTO (placeholder) ---------- */
+  .estratto-note {
+    font-size: .78rem;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin-top: .8rem;
+    opacity: .8;
+  }
+
+  /* ---------- BIO ---------- */
+  #autrice {
+    background: var(--cream-2);
+    background-image: radial-gradient(circle at 20% 30%, rgba(217,154,134,.12), transparent 40%);
+  }
+  .bio-wrap { max-width: 760px; margin: 0 auto; text-align: center; }
+  .bio-wrap p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+  .bio-wrap p:last-of-type { margin-bottom: 0; }
+  .bio-wrap .firma {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 2rem;
+    color: var(--amber-deep);
+    margin-top: 2.5rem;
+  }
+  .bio-highlight { color: var(--amber-deep); font-style: italic; }
+  .bio-link {
+    color: var(--amber-deep);
+    text-decoration: none;
+    border-bottom: 1px solid var(--amber);
+    transition: color .3s, border-color .3s;
+  }
+  .bio-link:hover { color: var(--amber); border-color: var(--amber-deep); }
+
+  /* ---------- RACCONTI ---------- */
+  #racconti { background: var(--cream); text-align: center; }
+  .racconti-wrap { max-width: 620px; margin: 0 auto; }
+  .racconti-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    line-height: 1.6;
+    color: var(--ink);
+    margin-bottom: 2rem;
+  }
+
+  /* ---------- NEWSLETTER ---------- */
+  #newsletter {
+    background: var(--ink);
+    color: var(--cream);
+    text-align: center;
+  }
+  #newsletter .section-head h2 { color: var(--cream); }
+  #newsletter .section-head .label { color: var(--rose); }
+  #newsletter .ornament { background: var(--rose); }
+  #newsletter .ornament::before { background: var(--ink); color: var(--rose); }
+  .news-text { max-width: 540px; margin: 0 auto 2.4rem; color: #e8dccf; font-size: 1.05rem; }
+  .news-form {
+    display: flex;
+    gap: .8rem;
+    max-width: 480px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .news-form input {
+    flex: 1;
+    min-width: 240px;
+    padding: .95rem 1.3rem;
+    border: 1px solid rgba(255,255,255,.25);
+    background: rgba(255,255,255,.06);
+    color: #fff;
+    font-family: 'Jost', sans-serif;
+    font-size: .95rem;
+    border-radius: 2px;
+  }
+  .news-form input::placeholder { color: #b9a89a; }
+  .news-form input:focus { outline: none; border-color: var(--rose); }
+  .news-form button {
+    padding: .95rem 2rem;
+    background: var(--amber-deep);
+    color: #fff;
+    border: none;
+    font-family: 'Jost', sans-serif;
+    font-size: .82rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background .3s ease, transform .3s ease;
+  }
+  .news-form button:hover { background: var(--amber); transform: translateY(-2px); }
+  .news-mini { font-size: .76rem; color: #9c8a7c; margin-top: 1.2rem; }
+  .news-embed { max-width: 480px; margin: 0 auto; }
+  .news-embed .ml-embedded { background: transparent; }
+
+  /* ---------- CONTATTI / FOOTER ---------- */
+  footer {
+    background: var(--cream);
+    text-align: center;
+    padding: 5rem 8vw 3rem;
+  }
+  footer .label {
+    font-size: .78rem;
+    letter-spacing: .4em;
+    text-transform: uppercase;
+    color: var(--amber-deep);
+    margin-bottom: 1rem;
+  }
+  footer h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    margin-bottom: 2rem;
+    color: var(--ink);
+  }
+  .socials { display: flex; gap: 1.5rem; justify-content: center; margin-bottom: 2.5rem; flex-wrap: wrap; }
+  .socials a {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: .9rem;
+    letter-spacing: .06em;
+    padding: .7rem 1.3rem;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    transition: all .3s ease;
+  }
+  .socials a:hover { border-color: var(--amber-deep); color: var(--amber-deep); transform: translateY(-2px); }
+  .footer-contact { color: var(--ink-soft); font-size: .95rem; margin-bottom: .4rem; }
+  .footer-contact a { color: var(--amber-deep); text-decoration: none; }
+  .footer-contact a:hover { text-decoration: underline; }
+  .copyright {
+    margin-top: 3rem;
+    padding-top: 1.6rem;
+    border-top: 1px solid var(--line);
+    font-size: .78rem;
+    color: var(--ink-soft);
+    letter-spacing: .05em;
+  }
+  .copyright .pav { color: var(--amber-deep); }
+
+  /* ---------- MODAL ESTRATTO ---------- */
+  .modal {
+    display: none;
+    position: fixed; inset: 0;
+    z-index: 200;
+    background: rgba(46,38,34,.6);
+    backdrop-filter: blur(4px);
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+  }
+  .modal.open { display: flex; }
+  .modal-box {
+    background: var(--cream);
+    max-width: 640px;
+    width: 100%;
+    max-height: 82vh;
+    overflow-y: auto;
+    padding: 3rem;
+    border-radius: 4px;
+    position: relative;
+    box-shadow: 0 30px 80px -20px rgba(0,0,0,.5);
+  }
+  .modal-box h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    color: var(--ink);
+    margin-bottom: .4rem;
+  }
+  .modal-box .modal-sub { font-size: .8rem; letter-spacing: .2em; text-transform: uppercase; color: var(--amber-deep); margin-bottom: 1.8rem; }
+  .modal-box p { color: var(--ink-soft); margin-bottom: 1rem; font-size: 1.02rem; }
+  .modal-close {
+    position: absolute; top: 1.2rem; right: 1.4rem;
+    background: none; border: none;
+    font-size: 1.8rem; color: var(--ink-soft);
+    cursor: pointer; line-height: 1;
+    transition: color .3s;
+  }
+  .modal-close:hover { color: var(--amber-deep); }
+  .modal-placeholder {
+    font-style: italic;
+    color: var(--ink-soft);
+    background: var(--cream-2);
+    padding: 1.5rem;
+    border-radius: 3px;
+    border-left: 3px solid var(--amber);
+  }
+  .estratto-body { margin-top: .5rem; }
+  .estratto-body p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.18rem;
+    line-height: 1.7;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  .estratto-body .estratto-nota {
+    font-family: 'Jost', sans-serif;
+    font-style: italic;
+    font-size: .92rem;
+    color: var(--amber-deep);
+    background: var(--cream-2);
+    padding: .9rem 1.1rem;
+    border-left: 3px solid var(--amber);
+    border-radius: 2px;
+    margin: 1.6rem 0 1.4rem;
+    line-height: 1.55;
+  }
+  .estratto-body .estratto-nota:first-child { margin-top: 0; }
+  .estratto-body .estratto-cit {
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--ink-soft);
+    padding: 0 1rem;
+    margin-bottom: 1.4rem;
+  }
+  .estratto-body .estratto-fine {
+    font-family: 'Jost', sans-serif;
+    font-style: italic;
+    font-size: .9rem;
+    color: var(--ink-soft);
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--line);
+  }
+  .modal-actions { margin-top: 1.8rem; text-align: center; }
+
+  /* ---------- REVEAL ON SCROLL ---------- */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity .9s ease, transform .9s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 820px) {
+    nav { padding: 1rem 1.4rem; }
+    nav.scrolled { padding: .7rem 1.4rem; }
+    nav .links { gap: 1rem; }
+    nav .links a { font-size: .72rem; }
+    header.hero { padding: 0 7vw; background-position: center 40%; }
+    header.hero::after { background: linear-gradient(180deg, rgba(255,251,244,.3) 0%, rgba(255,251,244,.55) 100%); }
+    section { padding: 4.5rem 7vw; }
+    .book, .book.reverse { grid-template-columns: 1fr; gap: 2rem; max-width: 420px; }
+    .book.reverse .book-cover { order: 0; }
+    .book-cover { max-width: 260px; margin: 0 auto; }
+    .book-info { text-align: center; }
+    .book-meta { text-align: left; }
+    .book-actions { justify-content: center; }
+    .bio-wrap p { font-size: 1.2rem; }
+    .modal-box { padding: 2rem 1.5rem; }
+  }
+  @media (max-width: 480px) {
+    nav .brand { display: none; }
+    .hero h1 { font-size: 3rem; }
+    .news-form input { min-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#home" class="brand">Stefania Morassi</a>
+  <div class="links">
+    <a href="#libri">Libri</a>
+    <a href="#storie">Storie</a>
+    <a href="#racconti">Racconti</a>
+    <a href="#autrice">Autrice</a>
+    <a href="#newsletter">Newsletter</a>
+    <a href="#contatti">Contatti</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="home">
+  <div class="hero-content">
+    <img src="images/logo-stefania-morassi-trasparente.png" alt="Stefania Morassi — Autrice Romance" class="hero-logo">
+    <div class="hero-eyebrow">Autrice Romance</div>
+    <h1 class="visually-hidden">Stefania<span class="light">Morassi</span></h1>
+    <p class="tagline">Storie di amore, di ferite e di rinascita — là dove i ricordi nascono davvero: nel cuore.</p>
+    <a href="#libri" class="hero-cta">Scopri i romanzi →</a>
+  </div>
+  <div class="scroll-hint">Scorri<span>↓</span></div>
+</header>
+
+<!-- LIBRI -->
+<section id="libri">
+  <div class="section-head reveal">
+    <span class="label">I miei romanzi</span>
+    <h2>Due storie, un'unica anima</h2>
+    <div class="ornament"></div>
+  </div>
+
+  <!-- Libro 1: Dove nascono i ricordi (novità) -->
+  <article class="book reveal">
+    <div class="book-cover">
+      <span class="book-badge">Novità · 2026</span>
+      <img src="images/dove-nascono-i-ricordi.jpg" alt="Copertina del romanzo Dove nascono i ricordi di Stefania Morassi">
+    </div>
+    <div class="book-info">
+      <div class="collana">Star Romance · PAV Edizioni</div>
+      <h3>Dove nascono i ricordi</h3>
+      <p class="trama">Aaron Foster, imprenditore della Florida, ha perso tutto: la ricchezza, la famiglia, il rispetto. Gli rimane solo la figlia Emily e il desiderio di vendicarsi di coloro che hanno ucciso Susan, la figlia maggiore.</p>
+      <p class="trama">Dave Wilson, ex agente dell'FBI segnato da un fallimento che non si perdona, viene richiamato in servizio per proteggere Emily durante il processo contro la criminalità organizzata nel quale Aaron ha deciso di testimoniare. Ciò che nasce tra loro è qualcosa che nessuno dei due aveva previsto — e che il destino sembra deciso a spezzare.</p>
+      <p class="trama">In una storia che intreccia amore, suspense e seconde possibilità, Stefania Morassi ci accompagna là dove i ricordi nascono davvero: non nella memoria, ma nel cuore.</p>
+      <div class="book-meta">Edizione Deluxe · 15,00 € · Età di lettura 14+ · Maggio 2026 · ISBN 979-12-5777-107-2</div>
+      <div class="book-actions">
+        <a href="https://www.amazon.it/DOVE-NASCONO-RICORDI-PAV-Editore/dp/B0H2CR21VF/" target="_blank" rel="noopener" class="btn btn-primary">Acquista cartaceo</a>
+        <a href="https://www.amazon.it/DOVE-NASCONO-RICORDI-PAV-Editore-ebook/dp/B0H28YP8SX/" target="_blank" rel="noopener" class="btn btn-ghost">Ebook</a>
+        <a href="https://pavedizioni.it/prodotto/dove-nascono-i-ricordi" target="_blank" rel="noopener" class="btn btn-ghost">Acquista su PAV Edizioni</a>
+        <button class="btn btn-text" onclick="openModal('modal-dnr')">Leggi un estratto →</button>
+      </div>
+    </div>
+  </article>
+
+  <!-- Libro 2: Cicatrici -->
+  <article class="book reverse reveal">
+    <div class="book-cover">
+      <img src="images/cicatrici.jpg" alt="Copertina del romanzo Cicatrici di Stefania Morassi">
+    </div>
+    <div class="book-info">
+      <div class="collana">Dark Romance · PAV Edizioni</div>
+      <h3>Cicatrici</h3>
+      <p class="trama">Catherine ha una ferita che il tempo non cancella. Sfidando la sua famiglia e i giudizi di una piccola città di provincia, ha scelto di crescere da sola sua figlia Elisa, costruendo la propria forza un giorno dopo l'altro.</p>
+      <p class="trama">Marc è uno scrittore inglese che il dolore ha reso muto. Dopo una perdita che lo ha svuotato, ha smesso di scrivere, di amare, di vivere.</p>
+      <p class="trama">Un manoscritto da tradurre li fa incontrare. Tra di loro, all'inizio, solo distanza e diffidenza — ma due anime segnate dalle stesse cicatrici sanno riconoscersi. In una storia che parla di perdita e di rinascita, di perdono e di amori che sembrano impossibili, Catherine e Marc scopriranno che essere amati non è una colpa, ma un diritto.</p>
+      <div class="book-meta">Romanzo · Età di lettura 15+ · Gennaio 2024</div>
+      <div class="book-actions">
+        <a href="https://www.amazon.it/CICATRICI-PAV-edizioni-editore/dp/B0CS6XB6QN/" target="_blank" rel="noopener" class="btn btn-primary">Acquista su Amazon</a>
+        <a href="https://pavedizioni.it/prodotto/cicatrici" target="_blank" rel="noopener" class="btn btn-ghost">Acquista su PAV Edizioni</a>
+        <button class="btn btn-text" onclick="openModal('modal-cic')">Leggi un estratto →</button>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- LE MIE STORIE (ispirate a Erkenci Kuş) -->
+<section id="storie">
+  <div class="section-head reveal">
+    <span class="label">Le mie storie</span>
+    <h2>Ispirate a Erkenci Kuş</h2>
+    <div class="ornament"></div>
+  </div>
+
+  <!-- Storia 1: Un Amore Dimenticato (Vol. 1) -->
+  <article class="book reveal">
+    <div class="book-cover">
+      <span class="book-badge">Serie · Vol. 1</span>
+      <img src="images/un-amore-dimenticato.jpg" alt="Copertina del romanzo Un Amore Dimenticato di Stefania Morassi">
+    </div>
+    <div class="book-info">
+      <div class="collana">Romance · Ispirato a Erkenci Kuş</div>
+      <h3>Un Amore Dimenticato</h3>
+      <p class="trama">Ispirato alla serie turca <em>Erkenci Kuş</em> (Day Dreamer), il romanzo racconta l'amore di Can e Sanem partendo da un momento preciso della fiction, ma facendo vivere ai due protagonisti vicende del tutto nuove.</p>
+      <p class="trama">Tra passione, ricordi e il coraggio di ricominciare, la loro storia prende strade inattese fino a un finale che nessuno si aspetta. Il primo capitolo di una storia d'amore che ha conquistato le lettrici di Wattpad.</p>
+      <div class="book-meta">Romanzo · eBook Kindle · 2021</div>
+      <div class="book-actions">
+        <a href="https://www.amazon.it/Amore-Dimenticato-Morassi-Stefania-ebook/dp/B08WDWTYHT/" target="_blank" rel="noopener" class="btn btn-primary">Ebook su Amazon</a>
+        <button class="btn btn-text" onclick="openModal('modal-uad')">Leggi un estratto &rarr;</button>
+      </div>
+    </div>
+  </article>
+
+  <!-- Storia 2: Vent'anni di noi (Vol. 2 - sequel) -->
+  <article class="book reverse reveal">
+    <div class="book-cover">
+      <span class="book-badge">Serie · Vol. 2</span>
+      <img src="images/ventanni-di-noi.jpg" alt="Copertina del romanzo Vent'anni di noi di Stefania Morassi">
+    </div>
+    <div class="book-info">
+      <div class="collana">Romance · Sequel di Un Amore Dimenticato</div>
+      <h3>Vent'anni di noi</h3>
+      <p class="trama">Il seguito di <em>Un Amore Dimenticato</em>. Com'è stato l'amore tra Can e Sanem? I vent'anni trascorsi insieme, la nascita dei figli, la loro quotidianità.</p>
+      <p class="trama">Fino a quel tragico incidente. E quello di Can è stato davvero un incidente? Un sequel che chiude il cerchio della loro storia, tra tenerezza e mistero.</p>
+      <div class="book-meta">Romanzo · eBook Kindle · Sequel di Un Amore Dimenticato</div>
+      <div class="book-actions">
+        <a href="https://www.amazon.it/Ventanni-noi-Sequel-Amore-Dimenticato-ebook/dp/B09MDNPLLG/" target="_blank" rel="noopener" class="btn btn-primary">Ebook su Amazon</a>
+        <button class="btn btn-text" onclick="openModal('modal-vdn')">Leggi un estratto &rarr;</button>
+      </div>
+    </div>
+  </article>
+
+  <!-- Storia 3: La magia dell'imperfezione (standalone) -->
+  <article class="book reveal">
+    <div class="book-cover">
+      <img src="images/la-magia-dellimperfezione.jpg" alt="Copertina del romanzo La magia dell'imperfezione di Stefania Morassi">
+    </div>
+    <div class="book-info">
+      <div class="collana">Romance · Rinascita</div>
+      <h3>La magia dell'imperfezione</h3>
+      <p class="trama">A Istanbul, tra i profumi naturali della Green Cosmetics, Sanem Aydın ha imparato a non aspettarsi più nulla dalla vita: un incidente le ha portato via la madre, la danza e il sogno dei grandi palcoscenici.</p>
+      <p class="trama">Poi arriva Can Divit, il consulente venuto da Londra per decidere le sorti dell'azienda. Due mondi che non dovrebbero incontrarsi e che invece, tra diffidenze e scintille, finiscono per riconoscersi proprio nelle rispettive imperfezioni.</p>
+      <p class="trama">Perché c'è una crepa in ogni cosa: è da lì che entra la luce. Una storia d'amore e di rinascita sulla bellezza nascosta che si rivela solo a chi sa guardare oltre la superficie.</p>
+      <div class="book-meta">Romanzo · eBook Kindle · Storia d'amore e di rinascita</div>
+      <div class="book-actions">
+        <a href="https://www.amazon.it/magia-dellimperfezione-Stefania-Morassi-ebook/dp/B09LSKT9LS/" target="_blank" rel="noopener" class="btn btn-primary">Ebook su Amazon</a>
+        <button class="btn btn-text" onclick="openModal('modal-mdi')">Leggi un estratto &rarr;</button>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- AUTRICE -->
+<section id="autrice">
+  <div class="section-head reveal">
+    <span class="label">L'Autrice</span>
+    <h2>Stefania Morassi</h2>
+    <div class="ornament"></div>
+  </div>
+  <div class="bio-wrap reveal">
+    <p>Vive e lavora a Tolmezzo, in provincia di Udine. Appassionata di libri e scrittura, ha iniziato a pubblicare i suoi primi racconti sulla piattaforma Wattpad, dove ha ricevuto riscontri positivi che l'hanno incoraggiata a proseguire il suo percorso creativo.</p>
+    <p>Ha approfondito la propria formazione frequentando i corsi di scrittura creativa, grammatica e correzione di bozza dell'agenzia letteraria Saper Scrivere.</p>
+    <p>La sua scrittura si distingue per uno stile <span class="bio-highlight">introspettivo</span>, attento alle sfumature emotive e ai conflitti interiori dei personaggi.</p>
+    <p>Nel 2023 il suo racconto <em>Consapevolezza</em> si è classificato al secondo posto nel concorso letterario "Il dolore dell'anima", indetto da PAV Edizioni, ed è incluso nell'<a href="https://pavedizioni.it/prodotto/il-dolore-dellanima" target="_blank" rel="noopener" class="bio-link">omonima antologia</a>. Con PAV nel 2024 ha pubblicato il suo primo romanzo, <em>Cicatrici</em>. Nello stesso anno un suo racconto è stato inserito nella raccolta <a href="https://www.ivvi.it/product/scrivi-un-racconto-di-dieci-parole/" target="_blank" rel="noopener" class="bio-link"><em>Scrivi un racconto di dieci parole</em></a> (Ivvi Editore). Nel 2026, sempre con Ivvi Editore, è stata selezionata per l'antologia <a href="https://www.ivvi.it/product/messaggi-di-amore-eterno/" target="_blank" rel="noopener" class="bio-link"><em>Messaggi di amore eterno</em></a>.</p>
+  </div>
+</section>
+
+<!-- RACCONTI -->
+<section id="racconti">
+  <div class="section-head reveal">
+    <span class="label">Racconti</span>
+    <h2>Storie brevi, da leggere gratis</h2>
+    <div class="ornament"></div>
+  </div>
+  <div class="racconti-wrap reveal">
+    <p class="racconti-text">Oltre ai romanzi, amo dare vita a racconti brevi: storie intense e intime, da leggere in un soffio. Li pubblico su Wattpad, dove potete leggerli gratuitamente, lasciare un commento e seguirmi per non perdere le prossime.</p>
+    <a href="https://www.wattpad.com/user/buinesere" target="_blank" rel="noopener" class="btn btn-primary">Leggi i miei racconti su Wattpad →</a>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section id="newsletter">
+  <div class="section-head reveal">
+    <span class="label">Resta in contatto</span>
+    <h2>La newsletter</h2>
+    <div class="ornament"></div>
+  </div>
+  <p class="news-text reveal">Iscriviti per essere la prima a sapere quando esce un nuovo romanzo, e per ricevere anteprime e contenuti speciali direttamente nella tua casella di posta.</p>
+  <div class="news-embed reveal">
+    <!-- MailerLite form -->
+    <div class="ml-embedded" data-form="j1P2R1"></div>
+  </div>
+  <p class="news-mini reveal">Niente spam, solo storie. Puoi disiscriverti quando vuoi.</p>
+</section>
+
+<!-- CONTATTI / FOOTER -->
+<footer id="contatti">
+  <div class="label reveal">Contatti</div>
+  <h2 class="reveal">Scrivimi</h2>
+  <div class="socials reveal">
+    <a href="https://www.instagram.com/s.morassi/" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.wattpad.com/user/buinesere" target="_blank" rel="noopener">Wattpad</a>
+    <a href="mailto:stefania.morassi@gmail.com">Email</a>
+  </div>
+  <p class="footer-contact reveal">Per contatti, collaborazioni ed eventi: <a href="mailto:stefania.morassi@gmail.com">stefania.morassi@gmail.com</a></p>
+  <div class="copyright">
+    © <span id="year"></span> Stefania Morassi · Tutti i diritti riservati · Romanzi editi da <span class="pav">PAV Edizioni</span><br>
+    <a href="privacy.html" style="color:var(--amber-deep); text-decoration:none; border-bottom:1px solid var(--line);">Informativa sulla privacy</a>
+  </div>
+</footer>
+
+<!-- MODALI ESTRATTI -->
+<div class="modal" id="modal-dnr">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-dnr')">&times;</button>
+    <h3>Dove nascono i ricordi</h3>
+    <div class="modal-sub">Estratto</div>
+    <div class="estratto-body">
+<p class="estratto-nota">Dall'inizio del romanzo. Il direttore Carter si presenta da Dave Wilson, ex agente dell'FBI, per chiedergli di tornare in servizio.</p>
+
+<p>«Mi conosce, Wilson, se non fosse davvero importante non sarei mai venuto fin qui a chiedere il suo aiuto. Ma in questa indagine abbiamo investito tanto, lei lo sa, e ora che finalmente siamo giunti al processo non posso permettere che tutto venga gettato alle ortiche.»</p>
+<p>«La capisco direttore, dico sul serio, ma io ormai non appartengo più a quel mondo. Sono cinque anni che ne ho preso le distanze e ho giurato a me stesso che non sarei più tornato indietro.»</p>
+<p>Il direttore Carter, un uomo sulla sessantina piuttosto corpulento, guardò con attenzione Dave e, dopo un attimo di riflessione, parlò di nuovo: «So bene ciò che è accaduto, e so anche che si sente responsabile, ma non deve. Il nostro mestiere comporta dei rischi e&hellip;».</p>
+<p>«Quello che lei chiama rischio è stato un colossale errore che poteva essere evitato», lo interruppe Dave accalorandosi, «se solo avessi seguito il mio istinto invece di ubbidire a un ordine che sapevo essere sbagliato. E lei lo sa bene.»</p>
+<p>«Ha solo seguito la procedura», insistette ancora il direttore.</p>
+<p>«Già, la procedura&hellip; e questo ha portato alla morte della ragazza», concluse amareggiato Dave.</p>
+
+<p class="estratto-nota">Dave accetta l'incarico e porta Emily, la figlia del testimone, in un cottage isolato sulla costa della Florida. Per non destare sospetti, in paese si fingono una coppia in vacanza&hellip; e qualcosa, tra loro, comincia a incrinarsi.</p>
+
+<p>Appena furono all'esterno lei cercò di liberarsi, ma lui rafforzò la presa. «Ti prego non fare scenate», le sussurrò all'orecchio. «Sono sicuro che quel tipo ora ci sta guardando.»</p>
+<p>Emily si voltò quel tanto che bastava per controllare, quindi si sporse a dargli un bacio sulla guancia, strusciandosi leggermente su di lui.</p>
+<p>«Cosa diavolo stai facendo?» sibilò Dave, più sorpreso che arrabbiato.</p>
+<p>«Avevi ragione: ci sta guardando e io cerco di essere credibile.»</p>
+<p>Emily aveva capito benissimo qual era il motivo per cui Dave l'aveva definita "la sua fidanzata", ciononostante ne era rimasta lusingata, e quando le aveva afferrato la mano aveva provato un leggero turbamento. Ora gli sedeva accanto, mentre lui guidava verso casa e, di tanto in tanto, ne sbirciava il profilo, chiedendosi se per caso non si stesse invaghendo o, peggio ancora, innamorando.</p>
+
+<p class="estratto-nota">Con il passare dei giorni, tra i due nasce una confidenza inattesa.</p>
+
+<p>«A volte, semplicemente, l'amore finisce e ti accorgi che chi ti sta accanto è diventato un estraneo», osservò Emily.</p>
+<p>«Sembra che tu parli per esperienza.»</p>
+<p>«Il matrimonio tra mio padre e mia madre, credo sia stato un buon matrimonio, ma tra loro non ho mai percepito un gran trasporto o un'intesa particolare, e spesso mi sono chiesta quanto, in realtà, si amassero.»</p>
+<p>«Mi dispiace», commentò Dave, stringendole la mano. Lei ricambiò, grata di quel contatto.</p>
+
+<p class="estratto-fine">L'estratto finisce qui. La storia continua tra le pagine di <em>Dove nascono i ricordi</em>.</p>
+    </div>
+    <div class="modal-actions">
+      <a href="https://www.amazon.it/DOVE-NASCONO-RICORDI-PAV-Editore/dp/B0H2CR21VF/" target="_blank" rel="noopener" class="btn btn-primary">Acquista il libro</a>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modal-cic">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-cic')">&times;</button>
+    <h3>Cicatrici</h3>
+    <div class="modal-sub">Estratto</div>
+    <div class="estratto-body">
+<p class="estratto-nota">Dall'inizio del romanzo. Catherine custodisce un biglietto di sua nonna.</p>
+
+<p class="estratto-cit"><em>La vita è per il dieci per cento cosa ti accade e per il novanta per cento come reagisci.</em><br>&mdash; Charles R. Swindoll</p>
+<p>Catherine ripiegò il biglietto, ormai sgualcito per le innumerevoli volte che lo aveva aperto e letto, e lo ripose con cura nel portagioie in cui conservava i ricordi più cari di sua nonna: la sua fede nuziale, i suoi orecchini di madreperla e numerose fotografie che la ritraevano prima ragazza, poi donna, moglie, madre e infine nonna. Quelle poche parole scritte con una calligrafia minuta ed elegante, com'era stata lei, rappresentavano per Catherine più di un regalo: erano una regola di vita!</p>
+<p>Con un sospiro chiuse il portagioie e lo ripose nell'ultimo scatolone. Poi, in punta di piedi si diresse verso la camera dove dormiva il "dieci per cento" della sua vita: sua figlia Elisa.</p>
+
+<p class="estratto-nota">Lontano da lei, in Inghilterra, Marc &mdash; uno scrittore che il dolore ha allontanato dalla vita &mdash; ha appena ripreso a scrivere. Il suo manoscritto custodisce parole che Catherine, incaricata di tradurlo, sentirà stranamente proprie.</p>
+
+<p>Quanto dura un attimo? Ve lo siete mai chiesti? Secondi? Minuti? Un battito di ciglia? Eppure è una parola che usiamo spesso, addirittura ne abusiamo: "Aspetta un attimo&hellip; dammi un attimo&hellip; hai un attimo?"</p>
+<p>Quell'attimo significa tutto e niente. Può cambiarti l'esistenza, può nascondersi dietro a uno sguardo, un sorriso, una parola appena sussurrata, una mano tesa&hellip;</p>
+<p>Ci sono attimi che aspettiamo per tutta la vita e che non arrivano mai, altri che non vorremmo mai vivere e che invece ci piombano addosso annientandoci&hellip; Ci sono attimi eterni che sembrano non passare e altri che sono talmente fugaci che ci pare di non averli neppure vissuti. Io li ho incontrati entrambi, anzi sono convinto che per tutti sia così, perché la vita è questo: una successione di attimi, di istanti unici e irripetibili. Pensateci!</p>
+
+<p class="estratto-nota">Dopo un primo, burrascoso incontro con Catherine, Marc si ritrova a provare qualcosa che non sentiva da tempo.</p>
+
+<p>Marc era arrabbiato. Per la prima volta dopo tanto tempo provava un sentimento diverso dalla compassione per se stesso, e quella rabbia lo faceva sentire stranamente vivo, aumentando per questo i suoi sensi di colpa.</p>
+<p>Seguito da Spike, corse per chilometri fino a sentire i polmoni bruciare per lo sforzo e la mancanza d'aria. Allora si fermò, accorgendosi solo in quel momento di essere arrivato al faro di Falmouth, dove lui e Brian si recavano spesso a guardare le navi in lontananza. Ricordare faceva male, ma non poteva evitarlo.</p>
+
+<p class="estratto-fine">L'estratto finisce qui. La storia continua tra le pagine di <em>Cicatrici</em>.</p>
+    </div>
+    <div class="modal-actions">
+      <a href="https://www.amazon.it/CICATRICI-PAV-edizioni-editore/dp/B0CS6XB6QN/" target="_blank" rel="noopener" class="btn btn-primary">Acquista il libro</a>
+    </div>
+  </div>
+</div>
+
+<!-- MODALE: Un Amore Dimenticato -->
+<div class="modal" id="modal-uad">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-uad')">&times;</button>
+    <h3>Un Amore Dimenticato</h3>
+    <div class="modal-sub">Estratto</div>
+    <div class="estratto-body">
+<p class="estratto-nota">Sanem ha lottato per farsi ricordare da Can, che dopo un incidente ha perso la memoria del loro amore. Ma tutti i suoi tentativi sono stati inutili e ora ha deciso di andarsene da Istanbul.</p>
+
+<p><em>Arrivai in stazione mentre veniva annunciato l'arrivo del treno che mi avrebbe portato verso una nuova vita. Mi affrettai a fare il biglietto e poi mi diressi verso il binario indicato.</em></p>
+<p><em>Non era stato facile decidere di andarmene, ma gli ultimi avvenimenti mi avevano convinto che questa era la cosa migliore da fare: per me, per lui e per la mia famiglia che da più di un anno mi vedeva soffrire ogni giorno.</em></p>
+<p><em>Lui non ricordava. Ogni volta che lo guardavo negli occhi alla ricerca di un segno, vedevo solo il vuoto, un'ombra di tristezza e la silenziosa supplica di perdonarlo perché non riusciva a trovare dentro di sé nessuna traccia di me e di quello che eravamo stati l'uno per l'altra.</em></p>
+<p><em>Il mio cuore e la mia anima sarebbero sempre appartenute a Can, ma era giunto il momento di lasciarlo libero e di concedere a me stessa una seconda possibilità. Lui era un Albatros e avrebbe spiccato di nuovo il volo verso mete lontane; io ero una Fenice che, ancora una volta, sarebbe rinata dalle sue ceneri.</em></p>
+
+<p class="estratto-fine">L'estratto finisce qui. La storia continua tra le pagine di <em>Un Amore Dimenticato</em>.</p>
+    </div>
+    <div class="modal-actions">
+      <a href="https://www.amazon.it/Amore-Dimenticato-Morassi-Stefania-ebook/dp/B08WDWTYHT/" target="_blank" rel="noopener" class="btn btn-primary">Acquista l'ebook</a>
+    </div>
+  </div>
+</div>
+
+<!-- MODALE: Vent'anni di noi -->
+<div class="modal" id="modal-vdn">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-vdn')">&times;</button>
+    <h3>Vent'anni di noi</h3>
+    <div class="modal-sub">Estratto</div>
+    <div class="estratto-body">
+<p class="estratto-nota">Can riporta a casa Sanem dopo la nascita del loro primo figlio, Kerem.</p>
+
+<p><em>Non vedevo l'ora di riportare Sanem e il piccolo, che avevamo deciso di chiamare Kerem, a casa. Avevo la sensazione che per ogni minuto trascorso lontano mi perdessi qualcosa.</em></p>
+<p><em>Ero elettrizzato. Da lì a poco avremmo iniziato la nostra vita insieme come una vera famiglia!</em></p>
+<p><em>Durante il tragitto fino a casa nessuno dei due parlò. Bastavano gli sguardi che ci scambiavamo e che poi finivano col cadere su quel tenero fagotto che dormiva tranquillo.</em></p>
+<p><em>Quando li raggiunsi nella cameretta di Kerem, lui era avidamente attaccato al seno di Sanem, e mai quadro mi parve più perfetto di quello!</em></p>
+
+<p class="estratto-nota">Ma la nascita di un figlio porta con sé anche le sue ombre, e Sanem comincia a sentire il peso di un nuovo ruolo.</p>
+
+<p><em>Il mio ruolo di madre mi aveva assorbito completamente, facendomi dimenticare di essere anche una moglie e una compagna.</em></p>
+<p><em>Mi rendevo conto di trascurare Can, anche se lui non me lo faceva pesare, ma era più forte di me. In un certo senso ce l'avevo con lui: la nascita di Kerem era stata una grande gioia per entrambi, ma chi aveva dovuto adattarsi maggiormente ai cambiamenti ero stata io.</em></p>
+
+<p class="estratto-fine">L'estratto finisce qui. La storia continua tra le pagine di <em>Vent'anni di noi</em>.</p>
+    </div>
+    <div class="modal-actions">
+      <a href="https://www.amazon.it/Ventanni-noi-Sequel-Amore-Dimenticato-ebook/dp/B09MDNPLLG/" target="_blank" rel="noopener" class="btn btn-primary">Acquista l'ebook</a>
+    </div>
+  </div>
+</div>
+
+<!-- MODALE: La magia dell'imperfezione -->
+<div class="modal" id="modal-mdi">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-mdi')">&times;</button>
+    <h3>La magia dell'imperfezione</h3>
+    <div class="modal-sub">Estratto</div>
+    <div class="estratto-body">
+<p class="estratto-nota">Alla Green Cosmetics di Istanbul, azienda sull'orlo del fallimento, lavora Sanem Aydın. Assunta personalmente dal signor Yilmaz, il proprietario, Sanem non ha un compito specifico: si occupa di fare le fotocopie, di smistare la posta, di rispondere al telefono e di altre piccole incombenze quotidiane.</p>
+
+<p><em>Sanem considerava quel lavoro, che non amava ma di cui aveva un disperato bisogno, una manna dal cielo, perché pur essendo giovanissima aveva già sofferto tanto.</em></p>
+<p><em>All'età di diciotto anni aveva perso sua madre a causa di un male incurabile e, due anni dopo, un grave incidente stradale l'aveva lasciata zoppicante e le aveva tolto per sempre la possibilità di diventare una ballerina. Era stato proprio l'infrangersi di quel sogno che l'aveva spezzata.</em></p>
+<p><em>Ora, all'età di venticinque anni, si ritrovava già priva di sogni e aspettative, se non quella di arrivare il prima possibile al giorno successivo.</em></p>
+
+<p class="estratto-nota">Un giorno, durante una riunione, il signor Yilmaz annuncia l'arrivo di un consulente esterno che deciderà le sorti dell'azienda.</p>
+
+<p><em>«Ho dovuto prendere una decisione molto difficile per me, ma che spero riuscirà a salvarci. Da lunedì saremo raggiunti dal signor Can Divit, socio fondatore della Revision and Consulting Society. Il signor Divit si fermerà tutto il tempo necessario a completare le sue analisi, e io vi prego vivamente di collaborare con lui.»</em></p>
+
+<p class="estratto-fine">L'estratto finisce qui. La storia continua tra le pagine di <em>La magia dell'imperfezione</em>.</p>
+    </div>
+    <div class="modal-actions">
+      <a href="https://www.amazon.it/magia-dellimperfezione-Stefania-Morassi-ebook/dp/B09LSKT9LS/" target="_blank" rel="noopener" class="btn btn-primary">Acquista l'ebook</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Anno corrente
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Nav che cambia allo scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  });
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Modali estratto
+  function openModal(id) { document.getElementById(id).classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeModal(id) { document.getElementById(id).classList.remove('open'); document.body.style.overflow = ''; }
+  document.querySelectorAll('.modal').forEach(m => {
+    m.addEventListener('click', (e) => { if (e.target === m) { m.classList.remove('open'); document.body.style.overflow = ''; } });
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') document.querySelectorAll('.modal.open').forEach(m => { m.classList.remove('open'); document.body.style.overflow = ''; });
+  });
+</script>
+
+<!-- MailerLite Universal -->
+<script>
+  (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+  .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+  n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+  (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+  ml('account', '2404253');
+</script>
+<!-- End MailerLite Universal -->
+</body>
+</html>
